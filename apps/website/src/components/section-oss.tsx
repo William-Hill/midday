@@ -172,7 +172,7 @@ export function SectionOSS() {
                   </div>
                 </div>
 
-                <GithubStats />
+                {/* <GithubStats /> */}
               </div>
             </a>
           </div>
