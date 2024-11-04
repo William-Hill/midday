@@ -46,6 +46,27 @@ Midday is an all-in-one tool designed to help freelancers, contractors, consulta
 
 We are working on the documentation to get started with Midday for local development: https://docs.midday.ai
 
+### Installation
+
+To get started with Midday, you'll need to install Bun, a fast JavaScript runtime. Follow these steps:
+
+1. **Install Bun via Homebrew:**
+   ```bash
+   brew tap oven-sh/bun
+   brew install bun   ```
+
+2. **Install dependencies:**
+
+   Navigate to the root of the project and run:
+   ```bash
+   bun install   ```
+
+3. **Start the app:**
+
+   To start the application, use:
+   ```bash
+   bun run start   ```
+
 ## App Architecture
 
 - Monorepo
