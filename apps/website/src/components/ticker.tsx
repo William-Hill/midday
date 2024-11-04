@@ -1,27 +1,48 @@
 import type { Database } from "@midday/supabase/types";
 import { createServerClient } from "@supabase/ssr";
 import Link from "next/link";
+import { cookies } from 'next/headers'
 
 const currency = "USD";
 
 export async function Ticker() {
-  const client = createServerClient<Database>(
+  const cookieStore = await cookies()
+  const client = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_KEY!,
     {
       cookies: {
-        get() {
-          return null;
+        getAll() {
+          return cookieStore.getAll()
         },
-        set() {
-          return null;
-        },
-        remove() {
-          return null;
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            )
+          } catch {
+            // The `setAll` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing
+            // user sessions.
+          }
         },
       },
-    },
-  );
+    }
+  )
+  // const client = createServerClient<Database>(
+  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  //   process.env.SUPABASE_SERVICE_KEY!,
+  //   {
+  //     cookies: {
+  //       get: (name: string) => cookieStore.get(name)?.value,
+  //       set: (name: string, value: string, options: any) => {},
+  //       remove: (name: string, options: any) => {},
+  //     },
+  //     cookieOptions: {
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   }
+  // );
 
   const [
     { data: totalSum },
